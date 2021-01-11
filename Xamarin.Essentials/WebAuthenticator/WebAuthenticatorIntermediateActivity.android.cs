@@ -20,9 +20,17 @@ namespace Xamarin.Essentials
 
             var extras = savedInstanceState ?? Intent.Extras;
 
-            // read the values
-            launched = extras.GetBoolean(launchedExtra, false);
-            actualIntent = extras.GetParcelable(actualIntentExtra) as Intent;
+            if (extras == null)
+            {
+                // activity was destroyed after creating new intent
+                launched = true;
+            }
+            else
+            {
+                // read the values
+                launched = extras.GetBoolean(launchedExtra, false);
+                actualIntent = extras.GetParcelable(actualIntentExtra) as Intent;
+            }
         }
 
         protected override void OnResume()
